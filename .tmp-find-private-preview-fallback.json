@@ -1,0 +1,4 @@
+{
+  "project_id": "khsanicntfagqjhcdwqs",
+  "query": "select id, title, storage_path, file_name, mime_type, thumbnail_path from public.resources where storage_path is not null and thumbnail_path is null and mime_type = 'application/pdf' limit 5"
+}

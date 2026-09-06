@@ -1,0 +1,4 @@
+{
+  "project_id": "khsanicntfagqjhcdwqs",
+  "query": "select id, title, page_count, thumbnail_path, storage_path from public.resources where id = 'e4a5a2e9-7108-46c4-a10a-2a3ed91a1b42' limit 1"
+}
