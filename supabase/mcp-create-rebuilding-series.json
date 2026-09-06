@@ -1,0 +1,4 @@
+{
+  "project_id": "khsanicntfagqjhcdwqs",
+  "query": "insert into public.resource_series (title, display_name, slug, brand, description, category, category_color, bundle_price_cents, is_published) values ('Rebuilding My Life', 'Rebuilding My Life Series', 'rebuilding-my-life', 'Chapter 21', 'The Rebuilding My Life Series helps clients examine the life their addictive patterns created and intentionally build a healthier life through responsibility, self-trust, stability, relationships, daily structure, personal growth, and meaningful action.', 'Responsibility & Personal Growth', '#3F7A4F', 0, false) on conflict (slug) do nothing; select id, title, display_name, slug, brand, category, category_color, bundle_price_cents, is_published from public.resource_series where slug = 'rebuilding-my-life' limit 1;"
+}

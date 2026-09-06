@@ -1,0 +1,4 @@
+{
+  "project_id": "khsanicntfagqjhcdwqs",
+  "query": "select s.id, s.title, s.display_name, s.slug, s.brand, s.category, s.bundle_price_cents, s.is_published, count(r.id)::int as member_count from public.resource_series s left join public.resources r on r.series_id = s.id where s.slug = 'rebuilding-my-life' group by s.id, s.title, s.display_name, s.slug, s.brand, s.category, s.bundle_price_cents, s.is_published limit 1;"
+}

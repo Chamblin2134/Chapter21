@@ -1,0 +1,4 @@
+{
+  "project_id": "khsanicntfagqjhcdwqs",
+  "query": "select id, title, display_name, slug, is_published from public.resource_series where slug = 'rebuilding-my-life' limit 1;"
+}
