@@ -20,8 +20,9 @@ describe("Store payment integration", () => {
     expect(source).toContain("supabaseClient.auth.getSession()");
     expect(source).toContain("session?.user?.id");
     expect(source).toContain("Authorization:'Bearer '+session.access_token");
-    expect(source).toContain("supabaseClient.from('store_checkout_intents').insert");
+    expect(source).not.toContain("supabaseClient.from('store_checkout_intents').insert");
     expect(source).not.toContain("store_checkout_intents').upsert");
+    expect(source).toContain("The server creates the checkout intent with the Supabase service role.");
   });
 
   it("replaces the Store account placeholders with customer-specific orders and secure downloads", () => {
