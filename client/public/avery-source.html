@@ -3543,10 +3543,8 @@ function v11OpenSimpleClient(btn){
         let data={};
         try{data=responseBody?JSON.parse(responseBody):{};}catch{data={};}
         if(!response.ok||typeof data.url!=='string'||!/^https:\/\/checkout\.stripe\.com\//.test(data.url))throw new Error(data.error||'Secure checkout is not active yet. Please contact the Institute to complete this purchase.');
-        if(!data.checkoutIntent||data.checkoutIntent.user_id!==session.user.id)throw new Error('Unable to secure checkout record: the authenticated user did not match the checkout intent.');
-        const intentResult=await supabaseClient.from('store_checkout_intents').insert(data.checkoutIntent);
-        console.debug('[Store Checkout] checkout intent insert',{error:intentResult?.error||null});
-        if(intentResult?.error)throw new Error('Unable to secure checkout record: '+intentResult.error.message);
+        // The server creates the checkout intent with the Supabase service role.
+        // The browser must never write this server-only table directly.
         window.top.location = data.url;
       }catch(error){showNotice(error instanceof Error?error.message:'Unable to open checkout.',true);checkout.disabled=false;}
     },true);

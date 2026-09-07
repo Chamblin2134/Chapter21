@@ -772,7 +772,24 @@ export async function createStoreCheckout(
         : null,
       line_items: verifiedItems,
     };
-    return { status: 200, body: { url: checkout.url, checkoutIntent } };
+    // Checkout intents are server-only records. Writing them with the service-role
+    // key keeps Stripe pricing snapshots out of the browser and correctly bypasses
+    // the table's RLS policy.
+    const intentResponse = await fetchImpl(
+      `${env.supabaseUrl}/rest/v1/store_checkout_intents`,
+      {
+        method: "POST",
+        headers: {
+          ...serviceHeaders(env.serviceRoleKey),
+          Prefer: "return=minimal",
+        },
+        body: JSON.stringify(checkoutIntent),
+      }
+    );
+    if (!intentResponse.ok) {
+      throw new Error("Unable to secure the checkout record.");
+    }
+    return { status: 200, body: { url: checkout.url } };
   } catch (error) {
     return {
       status: 400,

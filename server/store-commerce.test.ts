@@ -166,7 +166,10 @@ describe("Store promotion pricing", () => {
 
     expect(result.status).toBe(200);
     expect(result.body.url).toBe("https://checkout.stripe.test/session");
-    expect(result.body.checkoutIntent).toMatchObject({
+    expect(result.body.checkoutIntent).toBeUndefined();
+    const intentCall = fetchImpl.mock.calls.find(([input]) => String(input).includes("/rest/v1/store_checkout_intents"));
+    expect(intentCall?.[1]?.method).toBe("POST");
+    expect(JSON.parse(String(intentCall?.[1]?.body))).toMatchObject({
       stripe_session_id: "cs_test_checkout",
       user_id: "customer-test",
       customer_email: "customer@example.com",
@@ -204,11 +207,7 @@ describe("Store promotion pricing", () => {
     );
     expect(result.status).toBe(200);
     expect(result.body.url).toBe("https://checkout.stripe.test/welcome");
-    expect(result.body.checkoutIntent).toMatchObject({
-      stripe_session_id: "cs_test_welcome",
-      user_id: "customer-test",
-      final_total_cents: 750,
-    });
+    expect(result.body.checkoutIntent).toBeUndefined();
   });
 
   it("requires an authenticated account and returns only a time-limited signed free-packet link", async () => {
